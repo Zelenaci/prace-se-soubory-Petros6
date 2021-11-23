@@ -1,0 +1,88 @@
+from random import randint, choice
+
+
+samohlasky = ('aeiyou')
+souhlasky = 'qwrtpsdfghjklzxcvbnm'
+
+def slovo(maxchars=10):
+    vysledek = ""
+    for i in range(randint (1,maxchars)):
+        if i % 2 ==0 :
+            vysledek += choice (samohlasky)
+        else:
+            vysledek += choice(souhlasky)
+    return vysledek
+
+def veta():
+    vysledek= ""
+    maxwords = int(input("kolik chcete slov?: "))
+    for i in range(maxwords):
+         vysledek += slovo() + " "
+    vysledek = vysledek[:-1] + "."
+    return vysledek.capitalize()
+
+
+
+def pocitani_znaku():
+    pismena = dict()
+
+    f = open("C:\Users\Petr Škvor\Pictures\ukol_zadani.txt","r")
+
+
+    while True:
+        znak = f.read(1).upper()
+        if znak =="":
+            break
+        if znak in pismena.keys():
+            pismena[znak]+=1
+        else:
+            pismena[znak] = 1
+
+    f.close()
+
+
+    for znak in sorted (pismena.keys()):
+        if znak.isalpha():
+            print("{}[počet:{:4d}]".format(znak, pismena[znak]))
+            print("__")
+            print()
+
+    print("hotovo")
+
+
+
+
+
+
+def zmenapismena():
+
+    nahrazeni= input("zadejte malé písmeno slovo který má být nahrazen: ")
+    nahrazeni=nahrazeni.lower()
+    vysledek= input("zadejte čím ma být nahrazeno: ")
+    with open("C:\Users\Petr Škvor\Pictures\ukol_zadani.txt","r") as zadani, open("C:\Users\Petr Škvor\Music\veta_ukol.txt","w") as vysledek:
+
+
+        for line in zadani:
+
+            vysledek.write(line.replace(nahrazeni,str(vysledek)).lower())
+
+
+
+
+
+
+def menu():
+    a   = int(input(" \n slozeni vety ze slov  1 \n vypsani počtu znaku    2 \n prepsani textu v souboru 3 \n zadejte cislo operace:  "))
+    if (a == 1):
+
+        print(veta())
+    elif (a == 2):
+        pocitani_znaku()
+
+    elif (a == 3):
+        zmenapismena() 
+
+
+    return menu()
+
+menu()
